@@ -1,11 +1,14 @@
 # DB_SQLLITE
-SQLLITE USAGE IN MINECRAFT
-SubClass
 
+## SQLLITE USAGE IN MINECRAFT
+
+### SubClass
+
+```java
 public class DataBaseManager {
     private Connection connection;
     
-//Connect
+    //Connect
     public void connect(File databaseFile) {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -15,7 +18,7 @@ public class DataBaseManager {
         }
     }
 
-//Disconnect
+    //Disconnect
     public void disconnect() {
         if (connection != null) {
             try {
@@ -26,7 +29,7 @@ public class DataBaseManager {
         }
     }
 
-//CreateTables
+    //CreateTables
     public void createTables() {
         String createTableQuery = "CREATE TABLE IF NOT EXISTS players ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -40,7 +43,7 @@ public class DataBaseManager {
         }
     }
 
-//Insert
+    //Insert
     public void savePlayer(String name, int score) {
         String insertQuery = "INSERT INTO players (name, score) VALUES (?, ?);";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -52,8 +55,7 @@ public class DataBaseManager {
         }
     }
 
-
-//Select
+    //Select
     public int getPlayerScore(String name) {
         String selectQuery = "SELECT score FROM players WHERE name = ?;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
@@ -69,7 +71,7 @@ public class DataBaseManager {
         return 0;
     }
 
-//Update
+    //Update
     public void updatePlayerScore(String name, int newScore) {
         String updateQuery = "UPDATE players SET score = ? WHERE name = ?;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -80,23 +82,25 @@ public class DataBaseManager {
             e.printStackTrace();
         }
     }
-
-// Main Class
- getConfig().options().copyDefaults();
-        File configFile = new File(getDataFolder(), "config.yml");
-        if (!configFile.exists()) {
-            saveResource("config.yml", false);
+```
+# Main Class
+```  
+    getConfig().options().copyDefaults();
+    File configFile = new File(getDataFolder(), "config.yml");
+    if (!configFile.exists()) {
+        saveResource("config.yml", false);
+    }
+    File dataFile = new File(getDataFolder(), "database.db");
+    if (!dataFile.exists()) {
+        try {
+            dataFile.createNewFile();
+            getLogger().info("Database Loaded");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        File dataFile = new File(getDataFolder(), "database.db");
-        if (!dataFile.exists()) {
-            try {
-                dataFile.createNewFile();
-                getLogger().info("Database Loaded");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        DataBaseManager db = new DataBaseManager();
-        db.connect(dataFile);
-        db.createTables();
+    }
+    DataBaseManager db = new DataBaseManager();
+    db.connect(dataFile);
+    db.createTables();
 }
+```
