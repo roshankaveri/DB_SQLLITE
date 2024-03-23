@@ -104,3 +104,11 @@ public class DataBaseManager {
     db.createTables();
 }
 ```
+#POM>XML
+```
+<dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.45.2.0</version>
+  </dependency>
+```
