@@ -104,7 +104,7 @@ public class DataBaseManager {
     db.createTables();
 }
 ```
-# POM>XML
+# POM.XML
 ```
 <dependency>
       <groupId>org.xerial</groupId>
